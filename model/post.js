@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema(
   {
     author: {
       type: ObjectId,
-      ref: "User"
+      ref: "User",
     },
     title: {
       type: String,
@@ -17,12 +17,13 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    photo: {
-      data: Buffer,
-      contentType: String,
-    },
+
+    // photo: {
+    //   data: Buffer,
+    //   contentType: String,
+    // },
   },
-  { timestamps: true }
+  { timestamps: { createdAt: "created_at" } }
 );
 
 module.exports = mongoose.model("Post", postSchema);

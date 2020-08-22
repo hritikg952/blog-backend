@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const { v4: uuidv4 } = require("uuid");
 
-const {ObjectId} = mongoose.Schema;
+const { ObjectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema(
   {
@@ -26,17 +26,9 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    // post: {
-    //   type: ObjectId,
-    //   ref: "Post"
-    // },
-    posts:{
-      type: Array,
-      default: []
-    },
-    postnumber:{
-      type: Number,
-      default: 0
+    post: {
+      type: ObjectId,
+      ref: "Post",
     },
     salt: String,
     encry_password: {
@@ -44,7 +36,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timeStamps: true }
+  { timestamps: { createdAt: "created_at" } }
 );
 
 userSchema

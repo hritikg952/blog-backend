@@ -23,28 +23,14 @@ exports.createPost = (req, res, next) => {
         error: "NOT able to save post in DB",
       });
     }
-    res.json({
+    return res.json({
       title: post.title,
       content: post.content,
       _id: post._id,
       author: post.author.name,
     });
-
-    // User.findOneAndUpdate(
-    //   { _id: req.profile._id },
-    //   { $push: {posts.post_id: post._id } },
-    //   { new: true },
-    //   (err, posts) => {
-    //     if (err) {
-    //       return res.status(400).json({
-    //         error: "Unable to push PostId in PostList",
-    //       });
-    //     }
-    //     // next();
-    //   }
-    // );
   });
-  next();
+  // next();
 };
 
 //?READ routes
@@ -54,14 +40,14 @@ exports.getPost = (req, res) => {
 
 exports.getAllPost = (req, res) => {
   Post.find()
-    .populate("author", "name")
+    .populate("author")
     .exec((err, post) => {
       if (err) {
         return res.status(400).json({
           error: "no Post in DB",
         });
       }
-      res.json(post);
+      return res.json(post);
     });
 };
 
@@ -78,7 +64,7 @@ exports.updatePost = (req, res, id) => {
           error: "Post does not exist in DB",
         });
       }
-      res.json(post);
+      return res.json(post);
     }
   );
 };

@@ -31,13 +31,13 @@ router.post(
   isAuthenticated, //should be authenticated
   //isAdmin, //only admin can create a category
   createPost,
-  pushPostInPostList,
+  // pushPostInPostList,
   // pushPostIdInPostList,
   //updatePostNumber,
 );
 
 //?READ routes
-router.get("/post/:postId", getPost);
+router.get("/post/:userId/:postId", getPost);
 router.get("/post", getAllPost);
 router.get("/post/list/:userId", userPostList);
 
