@@ -20,9 +20,8 @@ exports.getUser = (req, res) => {
   req.profile.salt = undefined;
   req.profile.encry_password = undefined;
   //these two are just not really relevent to user
-  req.profile.createdAt = undefined;
   req.profile.updatedAt = undefined;
-
+  console.log(req.profile);
   return res.json(req.profile);
 };
 
@@ -40,11 +39,13 @@ exports.getAllUser = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
+  console.log(req)
   User.findByIdAndUpdate(
     { _id: req.profile._id },
     { $set: req.body },
     { new: true, useFindAndModify: false },
     (err, user) => {
+      
       if (err) {
         return res.status(400).json({
           error: "Update not Authorized",
@@ -58,22 +59,20 @@ exports.updateUser = (req, res) => {
 };
 
 exports.userPostList = (req, res) => {
-  Post.find({ _id: req.profile._id })
-    .populate("author", "name")
-    
-    .exec((err, post) => {
-      if (err) {
-        return res.status(400).json({
-          error: "No post in this account",
-        });
-      }
-      res.json(req.profile.posts);
-    });
+  Post.find({ author: req.profile._id }).populate("author","name lastname _id").exec((err, post) => {
+    if (err) {
+      return res.status(400).json({
+        error: "No post in this account",
+      });
+    }
+    res.json(post);
+  });
 };
 
 //pushing post in user's post list
 exports.pushPostInPostList = (req, res, next) => {
   let posts = [];
+  console.log("user", req);
   posts.push({
     _id: req.profile._id,
     author: req.profile.name,

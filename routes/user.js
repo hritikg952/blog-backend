@@ -15,9 +15,12 @@ const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
 router.param("userId", getUserById);
 
 //?READ routes onlyAdmin
-router.get("/user/:userId", isSignedIn, isAuthenticated, isAdmin, getUser);
 router.get("/alluser/:userId", isSignedIn, isAuthenticated, isAdmin, getAllUser);
-//get user post list
+
+//?READ routes
+router.get("/user/:userId", getUser);
+
+//?get user post list
 router.get("/user/post/:userId", isSignedIn, isAuthenticated, userPostList);
 
 //?UPDATE route

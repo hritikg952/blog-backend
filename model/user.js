@@ -22,14 +22,41 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    location: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    profile: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    fbUrl: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    instaUrl: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    linkInUrl: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     role: {
       type: Number,
       default: 0,
     },
-    post: {
-      type: ObjectId,
-      ref: "Post",
-    },
+    posts: [
+      {
+        type: ObjectId,
+        ref: "Post",
+      },
+    ],
     salt: String,
     encry_password: {
       type: String,

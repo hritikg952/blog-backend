@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema;
+const { ObjectId,Mixed } = mongoose.Schema;
 
 const postSchema = new mongoose.Schema(
   {
@@ -17,7 +17,10 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
+    published: {
+      type: Boolean,
+      required: true,
+    },
     // photo: {
     //   data: Buffer,
     //   contentType: String,

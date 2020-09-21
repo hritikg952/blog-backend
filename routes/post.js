@@ -17,6 +17,7 @@ const {
   getPost,
   getAllPost,
   updatePost,
+  updatePublishStatusInPost,
   deletePost,
 } = require("../controllers/post");
 
@@ -30,7 +31,7 @@ router.post(
   isSignedIn, //should be signed in
   isAuthenticated, //should be authenticated
   //isAdmin, //only admin can create a category
-  createPost,
+  createPost
   // pushPostInPostList,
   // pushPostIdInPostList,
   //updatePostNumber,
@@ -39,7 +40,7 @@ router.post(
 //?READ routes
 router.get("/post/:userId/:postId", getPost);
 router.get("/post", getAllPost);
-router.get("/post/list/:userId", userPostList);
+// router.get("/post/list/:userId", userPostList);
 
 //?UPDATE route
 router.put(
@@ -48,7 +49,12 @@ router.put(
   isAuthenticated,
   updatePost
 );
-module.exports = router;
+router.put(
+  "/post/publishUpdate/:userId/:postId",
+  isSignedIn,
+  isAuthenticated,
+  updatePublishStatusInPost
+);
 
 //?DELETE route
 router.delete(
@@ -57,3 +63,5 @@ router.delete(
   isAuthenticated,
   deletePost
 );
+
+module.exports = router;

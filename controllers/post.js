@@ -23,13 +23,40 @@ exports.createPost = (req, res, next) => {
         error: "NOT able to save post in DB",
       });
     }
+
+    //? after saving in Post schema that post's ID is stored in user's post list
+    let posts = [];
+    posts.push({
+      _id: req.profile._id,
+      author: req.profile.name,
+      post_id: post._id,
+      title: req.body.title,
+      content: req.body.content,
+    });
+    User.findOneAndUpdate(
+      { _id: req.profile._id },
+      { $push: { posts: posts } },
+      { new: true },
+      (err) => {
+        if (err) {
+          return res.status(400).json({
+            error: "Unable to save Post in list",
+          });
+        }
+        // next();
+      }
+    );
+
+    //? return response to frontend
     return res.json({
       title: post.title,
       content: post.content,
       _id: post._id,
       author: post.author.name,
+      published: post.published,
     });
   });
+
   // next();
 };
 
@@ -39,7 +66,7 @@ exports.getPost = (req, res) => {
 };
 
 exports.getAllPost = (req, res) => {
-  Post.find()
+  Post.find({ published: true })
     .populate("author")
     .exec((err, post) => {
       if (err) {
@@ -60,6 +87,22 @@ exports.updatePost = (req, res, id) => {
     { new: true, useFindAndModify: false },
     (err, post) => {
       if (err) {
+        return res.status(400).json({
+          error: "Post does not exist in DB",
+        });
+      }
+      return res.json(post);
+    }
+  );
+};
+exports.updatePublishStatusInPost = (req, res, id) => {
+  Post.findByIdAndUpdate(
+    { _id: req.post._id },
+    { $set: req.body },
+    { useFindAndModify: false },
+    (err, post) => {
+      if (err) {
+        console.log(err);
         return res.status(400).json({
           error: "Post does not exist in DB",
         });
