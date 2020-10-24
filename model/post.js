@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { ObjectId,Mixed } = mongoose.Schema;
+const { ObjectId, Mixed } = mongoose.Schema;
 
 const postSchema = new mongoose.Schema(
   {
@@ -21,6 +21,12 @@ const postSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    comments: [
+      {
+        type: ObjectId,
+        ref: "Comment",
+      },
+    ],
     // photo: {
     //   data: Buffer,
     //   contentType: String,

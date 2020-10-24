@@ -3,7 +3,7 @@ const Post = require("../model/post");
 
 exports.getUserById = (req, res, next, id) => {
   User.findById(id).exec((err, user) => {
-    if (err || !user) {
+    if (err) {
       return res.status(400).json({
         error: "User not found in DB",
       });
@@ -21,7 +21,6 @@ exports.getUser = (req, res) => {
   req.profile.encry_password = undefined;
   //these two are just not really relevent to user
   req.profile.updatedAt = undefined;
-  console.log(req.profile);
   return res.json(req.profile);
 };
 
@@ -39,13 +38,12 @@ exports.getAllUser = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  console.log(req)
+  console.log(req);
   User.findByIdAndUpdate(
     { _id: req.profile._id },
     { $set: req.body },
     { new: true, useFindAndModify: false },
     (err, user) => {
-      
       if (err) {
         return res.status(400).json({
           error: "Update not Authorized",
@@ -59,14 +57,16 @@ exports.updateUser = (req, res) => {
 };
 
 exports.userPostList = (req, res) => {
-  Post.find({ author: req.profile._id }).populate("author","name lastname _id").exec((err, post) => {
-    if (err) {
-      return res.status(400).json({
-        error: "No post in this account",
-      });
-    }
-    res.json(post);
-  });
+  Post.find({ author: req.profile._id })
+    .populate("author", "name lastname _id")
+    .exec((err, post) => {
+      if (err) {
+        return res.status(400).json({
+          error: "No post in this account",
+        });
+      }
+      res.json(post);
+    });
 };
 
 //pushing post in user's post list

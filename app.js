@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 const postRoute = require("./routes/post");
+const commentRoute = require("./routes/comment");
 
 //importing middlewares
 const bodyParser = require("body-parser");
@@ -22,6 +23,7 @@ mongoose
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
   })
   .then(() => {
     console.log("DB CONNECTED");
@@ -36,7 +38,7 @@ app.use(cors());
 app.use("/api", authRoute);
 app.use("/api", userRoute);
 app.use("/api", postRoute);
-
+app.use("/api", commentRoute);
 
 app.listen(port, () => {
   console.log(`running on port ${port}`);
