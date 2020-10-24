@@ -15,7 +15,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const app = express();
-const port = 5500;
+const port = process.env.PORT || 5500;
 
 //connecting to DATABASE
 mongoose
@@ -39,6 +39,10 @@ app.use("/api", authRoute);
 app.use("/api", userRoute);
 app.use("/api", postRoute);
 app.use("/api", commentRoute);
+
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "blogfrontend", "build", "index.html"));
+});
 
 app.listen(port, () => {
   console.log(`running on port ${port}`);

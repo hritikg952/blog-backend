@@ -22,7 +22,8 @@
   "devDependencies": {},
   "scripts": {
     "start": "nodemon app.js",
-    "server": "nodemon app.js"
+    "server": "nodemon app.js",
+    "heroku-postbuild": "npm install && cd blogfrontend && npm install && npm run build"
   },
   "author": "",
   "license": "ISC"
