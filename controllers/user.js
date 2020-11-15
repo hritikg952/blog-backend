@@ -38,7 +38,6 @@ exports.getAllUser = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  console.log(req);
   User.findByIdAndUpdate(
     { _id: req.profile._id },
     { $set: req.body },
@@ -47,6 +46,29 @@ exports.updateUser = (req, res) => {
       if (err) {
         return res.status(400).json({
           error: "Update not Authorized",
+        });
+      }
+      user.salt = undefined;
+      user.encry_password = undefined;
+      res.json(user);
+    }
+  );
+};
+
+exports.updateProfileImage = (req, res) => {
+  console.log(req.file)
+  User.findByIdAndUpdate(
+    { _id: req.profile._id },
+    {
+      $set: {
+        profileImage: req.file.path,
+      },
+    },
+    { new: true, useFindAndModify: false },
+    (err, user) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Image Update not Authorized",
         });
       }
       user.salt = undefined;
@@ -72,7 +94,6 @@ exports.userPostList = (req, res) => {
 //pushing post in user's post list
 exports.pushPostInPostList = (req, res, next) => {
   let posts = [];
-  console.log("user", req);
   posts.push({
     _id: req.profile._id,
     author: req.profile.name,

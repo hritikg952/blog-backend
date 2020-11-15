@@ -11,7 +11,6 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxlength: 50,
     },
     content: {
       type: String,
@@ -27,6 +26,10 @@ const postSchema = new mongoose.Schema(
         ref: "Comment",
       },
     ],
+    likes: {
+      type: Number,
+      default: 0,
+    },
     // photo: {
     //   data: Buffer,
     //   contentType: String,

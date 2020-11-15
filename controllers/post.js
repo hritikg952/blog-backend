@@ -19,6 +19,7 @@ exports.createPost = (req, res, next) => {
   const post = new Post(req.body);
   post.save((err, post) => {
     if (err) {
+      console.log(err);
       return res.status(400).json({
         error: "NOT able to save post in DB",
       });
@@ -127,3 +128,10 @@ exports.deletePost = (req, res) => {
     });
   });
 };
+
+//?OTHER SERVICES in POST
+//! like
+
+exports.toggleLike = (req,res)=>{
+  Post.findOneAndUpdate()
+}

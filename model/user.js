@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema(
       trim: true,
       default: "",
     },
+    profileImage: {
+      type: String,
+      default: null,
+    },
     fbUrl: {
       type: String,
       trim: true,

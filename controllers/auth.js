@@ -6,8 +6,6 @@ const { check, validationResult } = require("express-validator");
 
 //**SIGNUP route */
 exports.signup = (req, res) => {
-  console.log(req.body);
-
   //if error
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -65,8 +63,11 @@ exports.signin = (req, res) => {
     res.cookie("token", token, { expire: new Date() + 9999 });
 
     //send response to front end
-    const { _id, name, lastname, email, role } = user;
-    return res.json({ token, user: { _id, name, email, lastname, role } });
+    const { _id, name, lastname, email, role, profileImage } = user;
+    return res.json({
+      token,
+      user: { _id, name, email, lastname, role, profileImage },
+    });
   });
 };
 

@@ -54,6 +54,7 @@ exports.createComment = (req, res) => {
 };
 
 exports.createChildComment = (req, res) => {
+  console.log("profile",req.profile)
   req.body.author = req.profile;
   req.body.post = req.post;
   req.body.comment = req.comment;
